@@ -4,8 +4,25 @@
              xmlns:local="clr-namespace:QuizMobileApp"
              x:Class="QuizMobileApp.MainPage">
 
-	<Label Text="Welcome to Xamarin.Forms!" 
-           VerticalOptions="Center" 
-           HorizontalOptions="Center" />
+    
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="3*" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="3*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="5*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+        <Button Clicked="Play_Quiz_Button_Clicked" Text="Hrať Quiz" Grid.Row="1" Grid.Column="1" />
+        <Button Text="Aktualizácia" Grid.Row="2" Grid.Column="1" />
+        <Button Text="Nastavenia" Grid.Row="3" Grid.Column="1" />
+
+    </Grid>
 
 </ContentPage>

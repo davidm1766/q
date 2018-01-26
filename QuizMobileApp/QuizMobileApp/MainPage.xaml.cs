@@ -13,5 +13,12 @@ namespace QuizMobileApp
 		{
 			InitializeComponent();
 		}
-	}
+
+        private void Play_Quiz_Button_Clicked(object sender, EventArgs e)
+        {
+            Navigation.PushAsync(new LevelSelectPage());
+        }
+
+
+    }
 }

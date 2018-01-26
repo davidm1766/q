@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="QuizMobileApp.LevelSelectPage">
+    <!--<ContentPage.ToolbarItems>
+        <ToolbarItem Text="+" Activated="ToolBarItem_Navigate"/>
+    </ContentPage.ToolbarItems>-->
+    
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="10*" />
+            </Grid.RowDefinitions>
+        
+        <StackLayout Grid.Row="0">
+            <Label Text="Výber levelu"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" />
+        </StackLayout>
+            <ListView x:Name="listLevels" Grid.Row="1" HasUnevenRows="True" >
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <!--<TextCell Text="{Binding LevelName}" TextColor="Black"
+                                  Detail="{Binding LevelInfo}" DetailColor="Black"
+                                  />-->
+                        <ViewCell>
+                            <ViewCell.View>
+                                <StackLayout Orientation="Vertical" Margin="5;0;0;0" Spacing="2">
+                                    <Label Text="{Binding LevelName}" />
+                                    <Label Text="{Binding LevelInfo}" />
+                                </StackLayout>
+                            </ViewCell.View>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>
