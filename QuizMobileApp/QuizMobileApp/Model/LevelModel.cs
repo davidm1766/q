@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
+using Xamarin.Forms;
 
 namespace QuizMobileApp.Model
 {
@@ -10,16 +12,22 @@ namespace QuizMobileApp.Model
         public int CorrectAnswersCount { get; set; }
         public int AllQuestionsCount { get; set; }
 
+        public Color LevelColor {
+            get {
+                return (AllQuestionsCount - CorrectAnswersCount <= 1) ? Color.Yellow : Color.Red;
+            }
+        }
+
         public string LevelName {
             get {
-                return $"Level {IdLevel}";
+                return $"Level {IdLevel} ";
             }
         }
 
         public string LevelInfo
         {
             get {
-                return $"Počet ozázok {CorrectAnswersCount}/{AllQuestionsCount}";
+                return $"Počet otázok {CorrectAnswersCount}/{AllQuestionsCount} ";
             }
         }
 
