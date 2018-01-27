@@ -1,4 +1,5 @@
-﻿using System;
+﻿using QuizMobileApp.Repository;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,12 +10,12 @@ namespace QuizMobileApp
 {
 	public partial class App : Application
 	{
-		public App ()
+		public App (IRepository repo)
 		{
 			InitializeComponent();
 
             //MainPage = new QuizMobileApp.MainPage();
-            MainPage = new NavigationPage(new MainPage());
+            MainPage = new NavigationPage(new MainPage(repo));
         }
 
 		protected override void OnStart ()

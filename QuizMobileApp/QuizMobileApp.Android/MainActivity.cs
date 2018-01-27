@@ -6,6 +6,9 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.OS;
+using System.IO;
+using QuizMobileApp.Repository;
+using QuizMobileApp.Droid.Database;
 
 namespace QuizMobileApp.Droid
 {
@@ -18,9 +21,12 @@ namespace QuizMobileApp.Droid
             ToolbarResource = Resource.Layout.Toolbar;
 
             base.OnCreate(bundle);
-
+            
+            SQLiteUtil sql = new SQLiteUtil(this);
+            Database.Repository dl = new Database.Repository(sql);
+            
             global::Xamarin.Forms.Forms.Init(this, bundle);
-            LoadApplication(new App());
+            LoadApplication(new App(dl));
         }
     }
 }

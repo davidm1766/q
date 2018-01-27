@@ -12,6 +12,13 @@ namespace QuizMobileApp.Model
         public int CorrectAnswersCount { get; set; }
         public int AllQuestionsCount { get; set; }
 
+        public List<QuestionModel> Questions { get; set; }
+
+
+        public LevelModel(List<QuestionModel> questionModel) {
+            Questions = questionModel;
+        }
+
         public Color LevelColor {
             get {
                 return (AllQuestionsCount - CorrectAnswersCount <= 1) ? Color.Yellow : Color.Red;
@@ -31,13 +38,6 @@ namespace QuizMobileApp.Model
             }
         }
 
-        public List<LevelModel> GetAllLevels() {
-            List<LevelModel> lv = new List<LevelModel>();
-            lv.Add(new LevelModel() { IdLevel = 1, AllQuestionsCount = 10, CorrectAnswersCount = 9 });
-            lv.Add(new LevelModel() { IdLevel = 2, AllQuestionsCount = 10, CorrectAnswersCount = 8 });
-            lv.Add(new LevelModel() { IdLevel = 3, AllQuestionsCount = 10, CorrectAnswersCount = 1 });
-            lv.Add(new LevelModel() { IdLevel = 4, AllQuestionsCount = 10, CorrectAnswersCount = 0 });
-            return lv;
-        }
+
     }
 }

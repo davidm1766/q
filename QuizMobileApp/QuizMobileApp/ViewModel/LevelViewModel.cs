@@ -8,10 +8,11 @@ namespace QuizMobileApp.ViewModel
 {
     public class LevelViewModel
     {
+        
         public List<LevelModel> Levels { get; set; }
 
-        public LevelViewModel() {
-            Levels = new LevelModel().GetAllLevels();
+        public LevelViewModel(List<LevelModel> model) {
+            Levels = model;
         }
     }
 }

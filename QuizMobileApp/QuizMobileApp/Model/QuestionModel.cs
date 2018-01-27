@@ -4,22 +4,17 @@ using System.Text;
 
 namespace QuizMobileApp.Model
 {
-    public class Question
+    public class QuestionModel
     {
         public int IdQuestion { get; set; }
         public string QuestionText { get; set; }
+        public int LevelId { get; set; }
         public List<OptionInQuestionModel> Options { get; set; }
 
-        public Question(int IdQuestion)
+        public QuestionModel(List<OptionInQuestionModel> options)
         {
-            this.IdQuestion = IdQuestion;
-            Options = new List<OptionInQuestionModel>();
-            this.LoadOptions();
+            Options = options;
         }
-
-        private void LoadOptions()
-        {
-            
-        }
+        
     }
 }

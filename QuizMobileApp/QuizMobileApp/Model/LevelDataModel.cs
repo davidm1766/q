@@ -6,6 +6,6 @@ namespace QuizMobileApp.Model
 {
     public class LevelDataModel
     {
-        
+        public int Id { get; set; }
     }
 }

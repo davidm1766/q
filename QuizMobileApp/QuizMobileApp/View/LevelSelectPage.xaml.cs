@@ -17,10 +17,10 @@ namespace QuizMobileApp
 	{
         public LevelViewModel vm;
 
-		public LevelSelectPage ()
+		public LevelSelectPage (LevelViewModel lvlVM)
 		{
 			InitializeComponent ();
-            vm = new LevelViewModel();
+            vm = lvlVM;
             listLevels.ItemsSource = vm.Levels;
             listLevels.ItemClickCommand = ItemClickCommand;
         }
@@ -34,7 +34,6 @@ namespace QuizMobileApp
                 {
                     LevelModel lvl = item as LevelModel;
                     
-                   // DisplayAlert("title", lvl.LevelName, "cancel");
                 });
             }
         }
