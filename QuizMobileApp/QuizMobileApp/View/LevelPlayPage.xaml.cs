@@ -1,4 +1,5 @@
-﻿using System;
+﻿using QuizMobileApp.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,8 +13,11 @@ namespace QuizMobileApp.View
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class LevelPlayPage : ContentPage
 	{
-		public LevelPlayPage ()
+
+        public LevelPlayViewModel levelViewModel;
+		public LevelPlayPage (LevelPlayViewModel lvlVM)
 		{
+            lvlVM = levelViewModel;
 			InitializeComponent ();
 		}
 	}

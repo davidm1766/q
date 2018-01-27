@@ -1,4 +1,5 @@
 ﻿using QuizMobileApp.Model;
+using QuizMobileApp.View;
 using QuizMobileApp.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -33,7 +34,8 @@ namespace QuizMobileApp
                 return new Command((item) =>
                 {
                     LevelModel lvl = item as LevelModel;
-                    
+                    var level = vm.Levels.Where(x => x.IdLevel == lvl.IdLevel).FirstOrDefault();
+                    Navigation.PushAsync(new LevelPlayPage(new LevelPlayViewModel(level)));
                 });
             }
         }
