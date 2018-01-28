@@ -63,7 +63,7 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidAsset Include="Assets\quizdb.db">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </AndroidAsset>
     <None Include="Resources\AboutResources.txt" />
     <None Include="Assets\AboutAssets.txt" />
