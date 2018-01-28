@@ -12,29 +12,57 @@ namespace DatabaseGenerator
     class Program
     {
         private static SQLiteConnection paConnection;
-        private static string dbpath = @"C:\Users\Davidm\Desktop\quiz\quizdb1.db";
+        private static string dbpath = @"C:\Users\Davidm\Desktop\quiz\quizdb.db";
+        private static string insertExport = @"C:\Users\Davidm\Desktop\quiz\export.txt";
 
         private static string easyPath = @"C:\Users\Davidm\Desktop\quiz\easy.txt";
         private static string mediumPath = @"C:\Users\Davidm\Desktop\quiz\medium.txt";
         private static string hardPath = @"C:\Users\Davidm\Desktop\quiz\hard.txt";
 
 
+
         public static int LevelMAXCount = 10;
 
         public static List<Level> lvl;
-        public static int lastLevelId = -1;
+        public static List<Question> questio;
+        public static int lastLevelId = 0;
         public static int lastQuestionId = -1;
 
         //private static string 
         static void Main(string[] args)
         {
             lvl = new List<Level>();
+            questio = new List<Question>();
+
             File.Create(dbpath).Close();
             paConnection = new SQLiteConnection("Data Source=" + dbpath + ";Version=3;");
             CreateDB();
+
             Parse(easyPath, "E");
             Parse(mediumPath, "M");
             Parse(hardPath, "H");
+
+            WriteToDB();
+        }
+
+        private static void WriteToDB()
+        {
+            StringBuilder sb = new StringBuilder() ;
+            foreach (var l in lvl) {
+                string insertlvl = $"insert into LEVELS(ID,DIFFICULTY) values({l.Id},'{l.Difficulty}');";
+                sb.AppendLine(insertlvl);
+                foreach (var q in l.Questions) {
+                    string insertquest = $"insert into QUESTIONS(ID,LEVEL_ID,TEXT) values({q.Id},{q.LevelId},'{q.Text}');";
+                    sb.AppendLine(insertquest);
+                    foreach (var o in q.Options) {
+                        int corr = o.IsCorrect ? 1 : 0;
+                        string insertoptions = $"insert into OPTIONS_QUESTION(TEXT,IS_CORRECT,QUESTION_ID) values('{o.Text}',{corr},{o.QuestionId});";
+                        sb.AppendLine(insertoptions);
+                    }
+                }
+            }
+
+            File.WriteAllText(insertExport,sb.ToString(),Encoding.Unicode);
         }
 
         private static void CreateDB() {
@@ -70,28 +98,20 @@ namespace DatabaseGenerator
         public static void Parse(string importedFile,string difficulty)
         {            
                         
-            foreach(var line in File.ReadAllLines(importedFile))
+            foreach(var line in File.ReadAllLines(importedFile,Encoding.UTF8))
             {
                 
 
                 if (line.StartsWith("O:"))
                 {                    
                     ++lastQuestionId;
-
-                    if (lastQuestionId % LevelMAXCount == 0)
-                    {
-                        //naplnil sa mi level
-                        lvl.Add(new Level() { Id = ++lastLevelId, Difficulty = difficulty });
-                    }
-
                     string txt = line.Remove(0, 3);
-                    var l = lvl.Where(x => x.Id == lastLevelId).First();
-                    l.Questions.Add(new Question() { Id = lastQuestionId, LevelId = lastLevelId, Text = txt });
+                    questio.Add(new Question() { Id= lastQuestionId, Text=txt});
                 }
                 else 
                 {
                     if (!String.IsNullOrWhiteSpace(line)) {
-                        var l = lvl.Where(x => x.Id == lastLevelId).First().Questions.Where(x=>x.Id==lastQuestionId).First();
+                        var l = questio.Where(x=>x.Id==lastQuestionId).First();
                         if (line.StartsWith("*"))
                         {
                             var txt = line.Remove(0, 1);
@@ -103,9 +123,31 @@ namespace DatabaseGenerator
                     }
                 }
             }
-            var xa = lvl;
+            CreateLevels(difficulty);
         }
-        
+
+        private static void CreateLevels(string difficulty)
+        {
+            int i = 0;
+            Level lastlvl = null;
+            //randomize...
+            Random rand = new Random(2);
+            questio = questio.OrderBy(c => rand.Next()).Select(c => c).ToList();
+
+            foreach (var q in questio)
+            {
+                if (i % LevelMAXCount == 0)
+                {
+                    //naplnil sa mi level
+                    lastlvl = new Level() { Id = ++lastLevelId, Difficulty = difficulty };
+                    lvl.Add(lastlvl);
+                }
+                q.LevelId = lastlvl.Id;
+                lastlvl.Questions.Add(q);
+                i++;
+            }
+            questio.Clear();
+        }
     }
 
 
