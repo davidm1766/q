@@ -32,8 +32,8 @@
                 </Grid.ColumnDefinitions>
 
                     <Label HorizontalOptions="CenterAndExpand" Grid.Column="0">27</Label>
-                    <Label HorizontalOptions="CenterAndExpand" Grid.Column="1">50/50</Label>
-                    <Label HorizontalOptions="CenterAndExpand" Grid.Column="2">ludia</Label>
+                    <Image Source="fiftyfifty.jpg" HorizontalOptions="CenterAndExpand" Grid.Column="1">50/50</Image>
+                    <Image Source="icon.png" HorizontalOptions="CenterAndExpand" Grid.Column="2">ludia</Image>
                     <Label HorizontalOptions="CenterAndExpand" Grid.Column="3">telefon</Label>
                     <Label HorizontalOptions="CenterAndExpand" Grid.Column="4">2/10</Label>
                 

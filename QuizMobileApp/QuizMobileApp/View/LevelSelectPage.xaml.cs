@@ -39,7 +39,7 @@ namespace QuizMobileApp
                 {
                     LevelModel lvl = item as LevelModel;
                     var level = vm.Levels.Where(x => x.IdLevel == lvl.IdLevel).FirstOrDefault();
-                    Navigation.PushAsync(new LevelPlayPage(new LevelPlayViewModel(level)));
+                    Navigation.PushAsync(new LevelPlayPage(new LevelPlayViewModel(level),vm.Jokers));
                 });
             }
         }

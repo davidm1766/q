@@ -11,21 +11,25 @@ using Xamarin.Forms.Xaml;
 
 namespace QuizMobileApp.View
 {
-	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class LevelPlayPage : ContentPage
-	{
+    [XamlCompilation(XamlCompilationOptions.Compile)]
+    public partial class LevelPlayPage : ContentPage
+    {
 
         public LevelPlayViewModel LevelViewModel;
+        public JokersModel Jokers {get;set;}
         private Random _rnd; 
+
+
         //because preview
         public LevelPlayPage() {
             InitializeComponent();
             _rnd = new Random();
         }
 
-		public LevelPlayPage (LevelPlayViewModel lvlVM)
+		public LevelPlayPage (LevelPlayViewModel lvlVM,JokersModel jokers)
 		{
 			InitializeComponent ();
+            Jokers = jokers;
             _rnd = new Random();
             LevelViewModel = lvlVM;
             LblQuestion.Text = LevelViewModel.GetActualQuestion().QuestionText;
