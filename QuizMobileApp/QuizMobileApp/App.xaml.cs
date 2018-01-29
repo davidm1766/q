@@ -8,8 +8,11 @@ using Xamarin.Forms;
 
 namespace QuizMobileApp
 {
-	public partial class App : Application
-	{
+    public partial class App : Application
+    {
+        public App() {
+            InitializeComponent();
+        }
 		public App (IRepository repo)
 		{
 			InitializeComponent();

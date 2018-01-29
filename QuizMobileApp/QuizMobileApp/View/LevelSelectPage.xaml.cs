@@ -18,6 +18,10 @@ namespace QuizMobileApp
 	{
         public LevelViewModel vm;
 
+        public LevelSelectPage() {
+            InitializeComponent();
+        }
+
 		public LevelSelectPage (LevelViewModel lvlVM)
 		{
 			InitializeComponent ();

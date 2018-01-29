@@ -21,7 +21,7 @@ namespace QuizMobileApp.Model
 
         public Color LevelColor {
             get {
-                return (AllQuestionsCount - CorrectAnswersCount <= 1) ? Color.Yellow : Color.Red;
+                return (AllQuestionsCount - CorrectAnswersCount <= 1) ? Color.Yellow : Color.FromHex("ff8080");// Color.OrangeRed;
             }
         }
 
