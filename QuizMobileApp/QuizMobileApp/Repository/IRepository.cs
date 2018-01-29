@@ -13,5 +13,7 @@ namespace QuizMobileApp.Repository
         List<QuestionModel> GetQuestions(int id);
 
         List<OptionInQuestionModel> GetAllOptionsForQuestion(int IdQuestion);
+
+        JokersModel GetAllJokers();
     }
 }

@@ -11,18 +11,19 @@ namespace QuizMobileApp
 {
 	public partial class MainPage : ContentPage
 	{
-        public IRepository questionRepository;
+        public IRepository repository;
 
 		public MainPage(IRepository repo)
 		{
-            questionRepository = repo;
+            repository = repo;
 			InitializeComponent();
 		}
 
         private void Play_Quiz_Button_Clicked(object sender, EventArgs e)
         {
-            var levels = questionRepository.GetAllLevels();
-            var lvlView = new LevelViewModel(levels);
+            var levels = repository.GetAllLevels();
+            var jokers = repository.GetAllJokers();
+            var lvlView = new LevelViewModel(levels,jokers);
             Navigation.PushAsync(new LevelSelectPage(lvlView));
         }
 

@@ -9,8 +9,13 @@ namespace QuizMobileApp.Droid.Database
     public class Repository : IRepository
     {
         private SQLiteUtil _sqliteUtil;
-        public Repository(SQLiteUtil util) {
+        public Repository(SQLiteUtil util)
+        {
             _sqliteUtil = util;
+        }
+
+        public JokersModel GetAllJokers() {
+            return null;
         }
 
         public List<LevelModel> GetAllLevels()

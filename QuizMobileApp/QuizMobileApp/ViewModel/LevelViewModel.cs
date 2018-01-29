@@ -11,8 +11,11 @@ namespace QuizMobileApp.ViewModel
         
         public List<LevelModel> Levels { get; set; }
 
-        public LevelViewModel(List<LevelModel> model) {
+        public JokersModel Jokers { get; set; }
+
+        public LevelViewModel(List<LevelModel> model, JokersModel jokers) {
             Levels = model;
+            Jokers = jokers;
         }
     }
 }
