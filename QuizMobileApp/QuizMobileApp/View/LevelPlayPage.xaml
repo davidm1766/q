@@ -13,17 +13,18 @@
                 <RowDefinition Height="10*" />
             </Grid.RowDefinitions>
 
-            <Frame VerticalOptions="CenterAndExpand" 
-                   HorizontalOptions="CenterAndExpand" 
+
+            <Frame VerticalOptions="Fill" 
+                   HorizontalOptions="Fill" 
                    Grid.Row="0"
                    OutlineColor="Silver"
-                   Margin="3,1,3,1" Padding="3">
-                <ScrollView>
+                   Margin="3,1,3,1" Padding="1">
+                <ScrollView VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
                     <Label x:Name="LblQuestion" />
                 </ScrollView>
             </Frame>
 
-            <Frame Grid.Row="1" OutlineColor="Silver" Margin="3,1,3,1" Padding="3" VerticalOptions="Fill">
+            <Frame Grid.Row="1" OutlineColor="Silver" Margin="3,1,3,1" Padding="1" VerticalOptions="Fill">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*" />
