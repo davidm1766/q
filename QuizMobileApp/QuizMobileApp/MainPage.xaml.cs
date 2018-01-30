@@ -15,6 +15,9 @@ namespace QuizMobileApp
 
 		public MainPage(IRepository repo)
 		{
+            //ca-app-pub-9312615750092757~3504098531
+            //aapk => ca-app-pub-9312615750092757~3504098531
+            //reklama => ca-app-pub-9312615750092757/7766653462
             repository = repo;
 			InitializeComponent();
 		}

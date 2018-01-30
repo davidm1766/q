@@ -53,8 +53,13 @@
     <PackageReference Include="Xamarin.Android.Support.v4" Version="25.4.0.2" />
     <PackageReference Include="Xamarin.Android.Support.v7.CardView" Version="25.4.0.2" />
     <PackageReference Include="Xamarin.Android.Support.v7.MediaRouter" Version="25.4.0.2" />
+    <PackageReference Include="Xamarin.GooglePlayServices.Ads">
+      <Version>42.1021.1</Version>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Ads\AdBanner_Droid.cs" />
+    <Compile Include="Ads\AdInterstitial_Droid.cs" />
     <Compile Include="Database\Repository.cs" />
     <Compile Include="Database\SQLiteUtil.cs" />
     <Compile Include="MainActivity.cs" />

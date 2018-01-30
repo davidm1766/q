@@ -1,4 +1,5 @@
-﻿using QuizMobileApp.ViewModel;
+﻿using Ads;
+using QuizMobileApp.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,6 +26,10 @@ namespace QuizMobileApp.View
             LevelFailedViewModel = lfvm;
         }
 
+        public void ShowCorrectClicked(object sender, EventArgs e) {
+            IAdInterstitial adInterstitial = DependencyService.Get<IAdInterstitial>();
+            adInterstitial.ShowAd();
+        }
 
 
     }
