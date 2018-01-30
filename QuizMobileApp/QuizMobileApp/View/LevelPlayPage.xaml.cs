@@ -18,7 +18,7 @@ namespace QuizMobileApp.View
     public partial class LevelPlayPage : ContentPage
     {
 
-        public LevelPlayViewModel LevelViewModel;
+        public LevelPlayViewModel LevelPlayViewModel;
         public JokersModel Jokers {get;set;}
         private Random _rnd;
         private List<OptionInQuestionModel> actualOptions;
@@ -35,9 +35,9 @@ namespace QuizMobileApp.View
 			InitializeComponent ();
             Jokers = jokers;
             _rnd = new Random();
-            LevelViewModel = lvlVM;
-            LblQuestion.Text = LevelViewModel.GetActualQuestion().QuestionText;
-            actualOptions = LevelViewModel.GetActualQuestion().Options.OrderBy((item) => _rnd.Next()).ToList();
+            LevelPlayViewModel = lvlVM;
+            LblQuestion.Text = LevelPlayViewModel.GetActualQuestion().QuestionText;
+            actualOptions = LevelPlayViewModel.GetActualQuestion().Options.OrderBy((item) => _rnd.Next()).ToList();
             listOptions.ItemsSource = actualOptions;
             listOptions.ItemClickCommand = ItemClickCommand;
 
@@ -55,6 +55,20 @@ namespace QuizMobileApp.View
                 NumberOfTapsRequired = 1
             };
             peopleImg.GestureRecognizers.Add(peopleTapRecognizer);
+
+            var phoneTapRecognizer = new TapGestureRecognizer
+            {
+                Command = new Command(OnPhoneTap),
+                NumberOfTapsRequired = 1
+            };
+            phoneImg.GestureRecognizers.Add(phoneTapRecognizer);
+
+
+        }
+
+        private void OnPhoneTap(object obj)
+        {
+            Navigation.PushAsync(new LevelFailed(new LevelFailedViewModel(this.LevelPlayViewModel)));
         }
 
         private void OnPeopleTap(object obj)
@@ -68,12 +82,7 @@ namespace QuizMobileApp.View
                 randomVoting.Add(_rnd.Next(100));                
             }
             randomVoting = randomVoting.OrderByDescending(x=>x).ToList();
-            
-            //jokerDisplay.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-            //for (int i = 0; i < count; i++)
-            //{
-            //    jokerDisplay.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
-            //}
+                        
             for (int i = 0; i < count; i++)
             {
                 int cnt = -1;
@@ -173,15 +182,15 @@ namespace QuizMobileApp.View
         private void NextQuestion()
         {
             jokerDisplay.Children.Clear();
-            var quest = LevelViewModel.GetNextQuestion();
+            var quest = LevelPlayViewModel.GetNextQuestion();
             if (quest == null)
             {
                 DisplayAlert("NOVY LEVEL", "NOVY LEVEL", "Cancel");
             }
             else {
 
-                LblQuestion.Text = LevelViewModel.GetActualQuestion().QuestionText;
-                actualOptions = LevelViewModel.GetActualQuestion().Options.OrderBy((item) => _rnd.Next()).ToList();
+                LblQuestion.Text = LevelPlayViewModel.GetActualQuestion().QuestionText;
+                actualOptions = LevelPlayViewModel.GetActualQuestion().Options.OrderBy((item) => _rnd.Next()).ToList();
                 listOptions.ItemsSource = actualOptions;
             }
         }
