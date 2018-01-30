@@ -1,11 +1,7 @@
 ﻿using Ads;
 using QuizMobileApp.ViewModel;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+using System.Threading;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -29,7 +25,9 @@ namespace QuizMobileApp.View
         public void ShowCorrectClicked(object sender, EventArgs e) {
             IAdInterstitial adInterstitial = DependencyService.Get<IAdInterstitial>();
             adInterstitial.ShowAd();
-        }
+
+         }
+        
 
 
     }

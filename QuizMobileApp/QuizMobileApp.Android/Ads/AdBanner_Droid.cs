@@ -5,15 +5,62 @@ using Ads.Droid;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 using Android.Content;
+using Android.Gms.Ads.Reward;
 
 [assembly: ExportRenderer(typeof(AdBanner), typeof(AdBanner_Droid))]
 namespace Ads.Droid
 {
-    public class AdBanner_Droid : ViewRenderer {
+    public class AdBanner_Droid : ViewRenderer, IRewardedVideoAdListener
+    {
+        private IAdInterstitial _iadinter;
+        public AdBanner_Droid() : base(Android.App.Application.Context)
+        {
 
-        //public AdBanner_Droid(Context context) : base(context) {
+        }
+        public AdBanner_Droid(IAdInterstitial inter) : base(Android.App.Application.Context) {
+            _iadinter = inter;
+        }
 
-        //}
+        public void OnRewarded(IRewardItem reward)
+        {
+            int a = 3;
+            _iadinter.Rewarded(true);
+        }
+
+        public void OnRewardedVideoAdClosed()
+        {
+            int a = 3;
+        }
+
+        public void OnRewardedVideoAdFailedToLoad(int errorCode)
+        {
+            int a = 3;
+        }
+
+        public void OnRewardedVideoAdLeftApplication()
+        {
+            int a = 3;
+        }
+
+        public void OnRewardedVideoAdLoaded()
+        {
+            int a = 3;
+        }
+
+        public void OnRewardedVideoAdOpened()
+        {
+            int a = 3;
+        }
+
+        public void OnRewardedVideoStarted()
+        {
+            int a = 3;
+        }
+
+        public void Dispose()
+        {
+            int a = 3;
+        }
 
         protected override void OnElementChanged(ElementChangedEventArgs<View> e)
         {
@@ -54,9 +101,9 @@ namespace Ads.Droid
                 var requestbuilder = new AdRequest.Builder();
                 requestbuilder.AddTestDevice("E8AAF6D1FAACD33793ACBCFC167B405F");
                 requestbuilder.AddTestDevice(AdRequest.DeviceIdEmulator);
-
+                
                 adView.LoadAd(requestbuilder.Build());
-
+                
                 SetNativeControl(adView);
             }
         }

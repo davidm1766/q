@@ -7,6 +7,7 @@ namespace Ads
     public interface IAdInterstitial
     {
         void ShowAd();
+        void Rewarded(bool state);
     }
 
 }
