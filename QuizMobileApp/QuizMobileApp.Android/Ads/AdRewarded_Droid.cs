@@ -18,7 +18,7 @@ namespace Ads.Droid
         {
             _adsNotify = adsNotify;
             rewardedAd = MobileAds.GetRewardedVideoAdInstance(Android.App.Application.Context);
-            rewardedAd.RewardedVideoAdListener = new AdBanner_Droid(_adsNotify);
+            rewardedAd.RewardedVideoAdListener = new AdRewardedView_Droid(_adsNotify);
         }
 
         public AdRewarded_Droid()

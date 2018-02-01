@@ -64,7 +64,9 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Ads\AdBanner_Droid.cs" />
+    <Compile Include="Ads\AdInteresticialView_Droid.cs" />
+    <Compile Include="Ads\AdInteresticial_Droid.cs" />
+    <Compile Include="Ads\AdRewardedView_Droid.cs" />
     <Compile Include="Ads\AdRewarded_Droid.cs" />
     <Compile Include="Database\Repository.cs" />
     <Compile Include="Database\SQLiteUtil.cs" />

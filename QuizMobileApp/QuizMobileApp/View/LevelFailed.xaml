@@ -4,6 +4,7 @@
              xmlns:ads="http://schemas.android.com/apk/res-auto"
              x:Class="QuizMobileApp.View.LevelFailed">
     <ContentPage.Content>
+        
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="0.5*" />

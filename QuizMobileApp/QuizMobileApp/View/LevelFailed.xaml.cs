@@ -9,31 +9,38 @@ using Xamarin.Forms.Xaml;
 namespace QuizMobileApp.View
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class LevelFailed : ContentPage, IAdsNotifty
+	public partial class LevelFailed : ContentPage, IAdsNotifty, IIntersticialNotify
 	{
         public LevelFailedViewModel LevelFailedViewModel { get; set; }
-        private IAdRewarded adInterstitial;
+        private IAdRewarded adRewardedVideo;
+        private IAdIntersticial adIntersticial;
 
 		public LevelFailed ()
 		{
 			InitializeComponent ();
-            adInterstitial = DependencyService.Get<IAdRewarded>();
-            adInterstitial.Init(this);
+            adRewardedVideo = DependencyService.Get<IAdRewarded>();
+            adRewardedVideo.Init(this);
+
+            adIntersticial = DependencyService.Get<IAdIntersticial>();
+            adIntersticial.Init(this);
         }
         public LevelFailed(LevelFailedViewModel lfvm)
         {
             InitializeComponent();
             LevelFailedViewModel = lfvm;
-            adInterstitial = DependencyService.Get<IAdRewarded>();
-            adInterstitial.Init(this);
+            adRewardedVideo = DependencyService.Get<IAdRewarded>();
+            adRewardedVideo.Init(this);
 
-            
+            adIntersticial = DependencyService.Get<IAdIntersticial>();
+            adIntersticial.Init(this);
+
         }
 
         public void ShowCorrectClicked(object sender, EventArgs e) {
             if (CrossConnectivity.Current.IsConnected)
             {
-                adInterstitial.LoadAd();
+                adRewardedVideo.LoadAd();
+                //adIntersticial.LoadAd();
             }
             else
             {
@@ -43,21 +50,22 @@ namespace QuizMobileApp.View
 
         public void OnRewarded()
         {
-            
+               
         }
 
         public void OnRewardedVideoAdFailedToLoad(int errorCode)
         {
             switch (errorCode) {
                 //ERROR_CODE_INTERNAL_ERROR => Something happened internally; for instance, an invalid response was received from the ad server.
-                case 0: ShowErrorMessage("Internall error"); break;
+                case 0: ShowErrorMessage("Internal error"); break;
                 //ERROR_CODE_INVALID_REQUEST => The ad request was invalid; for instance, the ad unit ID was incorrect.
-                case 1: ShowErrorMessage("Neplatne ID"); break;
+                case 1: ShowErrorMessage("Neplatné ID"); break;
                 //ERROR_CODE_NETWORK_ERROR => The ad request was unsuccessful due to network connectivity.
                 case 2: ShowErrorMessage("Nie je pripojenie na internet!"); break;
                 //ERROR_CODE_NO_FILL => The ad request was successful, but no ad was returned due to lack of ad inventory. Nie je ziadna reklama od googlu uz...
-                case 3: ShowErrorMessage("V sučastnosti nie su dostupné žiadne reklamy"); break;
+                case 3: adIntersticial.LoadAd(); break;
             }
+            
         }
 
         private void ShowErrorMessage(string message)
@@ -72,7 +80,7 @@ namespace QuizMobileApp.View
 
         public void OnRewardedVideoAdLoaded()
         {
-            adInterstitial.ShowAd();
+            adRewardedVideo.ShowAd();
         }
 
         public void OnRewardedVideoAdLeftApplication()
@@ -84,5 +92,41 @@ namespace QuizMobileApp.View
         {
          
         }
+        #region Interestitial
+        public void RewardedVideoAdFailedToLoad(int error)
+        {
+            switch (error)
+            {
+                //ERROR_CODE_INTERNAL_ERROR => Something happened internally; for instance, an invalid response was received from the ad server.
+                case 0: ShowErrorMessage("Internal error"); break;
+                //ERROR_CODE_INVALID_REQUEST => The ad request was invalid; for instance, the ad unit ID was incorrect.
+                case 1: ShowErrorMessage("Neplatné ID"); break;
+                //ERROR_CODE_NETWORK_ERROR => The ad request was unsuccessful due to network connectivity.
+                case 2: ShowErrorMessage("Nie je pripojenie na internet!"); break;
+                //ERROR_CODE_NO_FILL => The ad request was successful, but no ad was returned due to lack of ad inventory. Nie je ziadna reklama od googlu uz...
+                case 3: ShowErrorMessage("V sučastnosti nie sú dostupné žiadne reklamy"); break;
+            }
+        }
+
+        public void RewardedVideoAdLoaded()
+        {
+            adIntersticial.ShowAd();
+        }
+
+        public void RewardedVideoAdLeftApplication()
+        {
+            
+        }
+
+        public void RewardedVideoAdClosed()
+        {
+            
+        }
+
+        public void Rewarded()
+        {
+            //rewarded
+        }
+        #endregion
     }
 }
