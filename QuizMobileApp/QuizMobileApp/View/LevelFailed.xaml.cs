@@ -1,4 +1,5 @@
 ﻿using Ads;
+using Plugin.Connectivity;
 using QuizMobileApp.ViewModel;
 using System;
 using System.Threading;
@@ -11,26 +12,33 @@ namespace QuizMobileApp.View
 	public partial class LevelFailed : ContentPage, IAdsNotifty
 	{
         public LevelFailedViewModel LevelFailedViewModel { get; set; }
-        private IAdInterstitial adInterstitial;
+        private IAdRewarded adInterstitial;
 
 		public LevelFailed ()
 		{
 			InitializeComponent ();
-            adInterstitial = DependencyService.Get<IAdInterstitial>();
+            adInterstitial = DependencyService.Get<IAdRewarded>();
             adInterstitial.Init(this);
         }
         public LevelFailed(LevelFailedViewModel lfvm)
         {
             InitializeComponent();
             LevelFailedViewModel = lfvm;
-            adInterstitial = DependencyService.Get<IAdInterstitial>();
+            adInterstitial = DependencyService.Get<IAdRewarded>();
             adInterstitial.Init(this);
 
             
         }
 
         public void ShowCorrectClicked(object sender, EventArgs e) {
-            adInterstitial.LoadAd();
+            if (CrossConnectivity.Current.IsConnected)
+            {
+                adInterstitial.LoadAd();
+            }
+            else
+            {
+                ShowErrorMessage("Nie je pripojenie na internet!");
+            }
          }
 
         public void OnRewarded()

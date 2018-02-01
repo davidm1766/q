@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Ads
 {
-    public interface IAdInterstitial
+    public interface IAdRewarded
     {
         void Init(IAdsNotifty adsNotify);
         void ShowAd();

@@ -65,7 +65,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Ads\AdBanner_Droid.cs" />
-    <Compile Include="Ads\AdInterstitial_Droid.cs" />
+    <Compile Include="Ads\AdRewarded_Droid.cs" />
     <Compile Include="Database\Repository.cs" />
     <Compile Include="Database\SQLiteUtil.cs" />
     <Compile Include="MainActivity.cs" />

@@ -5,10 +5,10 @@ using Android.Gms.Ads.Reward;
 using System;
 using Android.Net;
 
-[assembly: Dependency(typeof(AdInterstitial_Droid))]
+[assembly: Dependency(typeof(AdRewarded_Droid))]
 namespace Ads.Droid
 {
-    public class AdInterstitial_Droid : IAdInterstitial
+    public class AdRewarded_Droid : IAdRewarded
     {
         //InterstitialAd interstitialAd;
         private IRewardedVideoAd rewardedAd;
@@ -21,7 +21,7 @@ namespace Ads.Droid
             rewardedAd.RewardedVideoAdListener = new AdBanner_Droid(_adsNotify);
         }
 
-        public AdInterstitial_Droid()
+        public AdRewarded_Droid()
         {
             //interstitialAd = new InterstitialAd(Android.App.Application.Context);
             //interstitialAd.Rewarded += InterstitialAd_Rewarded;
@@ -31,10 +31,10 @@ namespace Ads.Droid
             //interstitialAd.RewardedVideoAdOpened += InterstitialAd_RewardedVideoAdOpened;
             //// TODO: change this id to your admob id
             //interstitialAd.AdUnitId = "ca-app-pub-9312615750092757/7766653462";
-            
+
         }
 
-      
+
         public void LoadAd()
         {
             if (!rewardedAd.IsLoaded)
@@ -45,7 +45,7 @@ namespace Ads.Droid
                 rewardedAd.LoadAd("ca-app-pub-9312615750092757/7766653462", requestbuilder.Build());
             }
         }
-        
+
 
         public void ShowAd()
         {
@@ -56,6 +56,7 @@ namespace Ads.Droid
             //LoadAd();
         }
 
+        
     }
 
     
