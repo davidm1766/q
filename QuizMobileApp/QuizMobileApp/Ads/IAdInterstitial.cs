@@ -6,8 +6,9 @@ namespace Ads
 {
     public interface IAdInterstitial
     {
+        void Init(IAdsNotifty adsNotify);
         void ShowAd();
-        void Rewarded(bool state);
+        void LoadAd();
     }
 
 }

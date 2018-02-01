@@ -12,54 +12,54 @@ namespace Ads.Droid
 {
     public class AdBanner_Droid : ViewRenderer, IRewardedVideoAdListener
     {
-        private IAdInterstitial _iadinter;
+        private IAdsNotifty _iadinter;
         public AdBanner_Droid() : base(Android.App.Application.Context)
         {
-
         }
-        public AdBanner_Droid(IAdInterstitial inter) : base(Android.App.Application.Context) {
+
+        public AdBanner_Droid(IAdsNotifty inter) : base(Android.App.Application.Context) {
             _iadinter = inter;
         }
 
         public void OnRewarded(IRewardItem reward)
         {
-            int a = 3;
-            _iadinter.Rewarded(true);
+
+            _iadinter.OnRewarded();
         }
 
         public void OnRewardedVideoAdClosed()
         {
-            int a = 3;
+            _iadinter.OnRewardedVideoAdClosed();
         }
 
         public void OnRewardedVideoAdFailedToLoad(int errorCode)
         {
-            int a = 3;
+            _iadinter.OnRewardedVideoAdFailedToLoad(errorCode);
         }
 
         public void OnRewardedVideoAdLeftApplication()
         {
-            int a = 3;
+            _iadinter.OnRewardedVideoAdLeftApplication();
         }
 
         public void OnRewardedVideoAdLoaded()
         {
-            int a = 3;
+            _iadinter.OnRewardedVideoAdLoaded();
         }
 
         public void OnRewardedVideoAdOpened()
         {
-            int a = 3;
+            _iadinter.OnRewardedVideoAdOpened();
         }
 
         public void OnRewardedVideoStarted()
         {
-            int a = 3;
+            
         }
 
         public void Dispose()
         {
-            int a = 3;
+            
         }
 
         protected override void OnElementChanged(ElementChangedEventArgs<View> e)

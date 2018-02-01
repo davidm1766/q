@@ -3,6 +3,7 @@ using Ads.Droid;
 using Xamarin.Forms;
 using Android.Gms.Ads.Reward;
 using System;
+using Android.Net;
 
 [assembly: Dependency(typeof(AdInterstitial_Droid))]
 namespace Ads.Droid
@@ -10,10 +11,16 @@ namespace Ads.Droid
     public class AdInterstitial_Droid : IAdInterstitial
     {
         //InterstitialAd interstitialAd;
-        IRewardedVideoAd rewardedAd;
+        private IRewardedVideoAd rewardedAd;
+        private IAdsNotifty _adsNotify;
 
+        public void Init(IAdsNotifty adsNotify)
+        {
+            _adsNotify = adsNotify;
+            rewardedAd = MobileAds.GetRewardedVideoAdInstance(Android.App.Application.Context);
+            rewardedAd.RewardedVideoAdListener = new AdBanner_Droid(_adsNotify);
+        }
 
-         
         public AdInterstitial_Droid()
         {
             //interstitialAd = new InterstitialAd(Android.App.Application.Context);
@@ -24,24 +31,21 @@ namespace Ads.Droid
             //interstitialAd.RewardedVideoAdOpened += InterstitialAd_RewardedVideoAdOpened;
             //// TODO: change this id to your admob id
             //interstitialAd.AdUnitId = "ca-app-pub-9312615750092757/7766653462";
-            rewardedAd = MobileAds.GetRewardedVideoAdInstance(Android.App.Application.Context);
-            rewardedAd.RewardedVideoAdListener = new AdBanner_Droid(this);            
             
-            LoadAd();
         }
 
       
-        void LoadAd()
+        public void LoadAd()
         {
-            var requestbuilder = new AdRequest.Builder();
-            requestbuilder.AddTestDevice("E8AAF6D1FAACD33793ACBCFC167B405F");
-            requestbuilder.AddTestDevice(AdRequest.DeviceIdEmulator);
-            rewardedAd.LoadAd("ca-app-pub-9312615750092757/7766653462", requestbuilder.Build()); 
+            if (!rewardedAd.IsLoaded)
+            {
+                var requestbuilder = new AdRequest.Builder();
+                requestbuilder.AddTestDevice("E8AAF6D1FAACD33793ACBCFC167B405F");
+                requestbuilder.AddTestDevice(AdRequest.DeviceIdEmulator);
+                rewardedAd.LoadAd("ca-app-pub-9312615750092757/7766653462", requestbuilder.Build());
+            }
         }
-
-        public void Rewarded(bool state) {
-            var a = state;
-        }
+        
 
         public void ShowAd()
         {
@@ -49,10 +53,9 @@ namespace Ads.Droid
             {
                 rewardedAd.Show();
             }
-            LoadAd();
+            //LoadAd();
         }
 
-       
     }
 
     
