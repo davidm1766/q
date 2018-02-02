@@ -9,12 +9,16 @@ namespace QuizMobileApp.ViewModel
     {
 
         public LevelModel Level;
+        public bool CanContinue { get; set; }
+        public bool IsReturnedFromModal { get; set; }
         private int _actualQuestion;
 
         public LevelPlayViewModel(LevelModel lvl)
         {
             Level = lvl;
             _actualQuestion = 0;
+            CanContinue = false;
+            IsReturnedFromModal = false;
         }
 
         public QuestionModel GetActualQuestion()

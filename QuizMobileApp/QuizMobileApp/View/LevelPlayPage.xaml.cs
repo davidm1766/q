@@ -3,8 +3,6 @@ using QuizMobileApp.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -22,8 +20,7 @@ namespace QuizMobileApp.View
         public JokersModel Jokers {get;set;}
         private Random _rnd;
         private List<OptionInQuestionModel> actualOptions;
-
-
+        
         //because preview
         public LevelPlayPage() {
             InitializeComponent();
@@ -40,7 +37,7 @@ namespace QuizMobileApp.View
             actualOptions = LevelPlayViewModel.GetActualQuestion().Options.OrderBy((item) => _rnd.Next()).ToList();
             listOptions.ItemsSource = actualOptions;
             listOptions.ItemClickCommand = ItemClickCommand;
-
+            
             
             var fiftyTapRecognizer = new TapGestureRecognizer
             {
@@ -68,7 +65,20 @@ namespace QuizMobileApp.View
 
         private void OnPhoneTap(object obj)
         {
-            Navigation.PushAsync(new LevelFailed(new LevelFailedViewModel(this.LevelPlayViewModel)));
+            jokerDisplay.Children.Clear();
+            Label l = new Label();
+            string answer = "";
+            if (_rnd.Next(0, 100) < 5)
+            {
+                answer = actualOptions.Where(x => !x.IsCorrect).First().Text;
+            }
+            else {
+                answer = actualOptions.Where(x => x.IsCorrect).First().Text;
+            }
+            
+
+            l.Text = $"Priateľ na telefóne ti radí: {answer}, ale nie je si úplne istý.";
+            jokerDisplay.Children.Add(l);
         }
 
         private void OnPeopleTap(object obj)
@@ -128,7 +138,7 @@ namespace QuizMobileApp.View
         }
 
         public void OnFiftyFifty() {
-            DisplayAlert("tuk", "50/50", "Cancel");
+            
             Jokers.Joker50on50--;
             if (Jokers.Joker50on50 <= 0) {
                 fiftyfiftyImg.IsVisible = false;
@@ -176,7 +186,8 @@ namespace QuizMobileApp.View
 
         private void IncorrectAnswer()
         {
-            DisplayAlert("Nespravna", "Zla odpoved", "Cancel");
+            // DisplayAlert("Nespravna", "Zla odpoved", "Cancel");
+            Navigation.PushAsync(new LevelFailed(new LevelFailedViewModel(this.LevelPlayViewModel, actualOptions)));
         }
 
         private void NextQuestion()
@@ -193,6 +204,29 @@ namespace QuizMobileApp.View
                 actualOptions = LevelPlayViewModel.GetActualQuestion().Options.OrderBy((item) => _rnd.Next()).ToList();
                 listOptions.ItemsSource = actualOptions;
             }
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            if (LevelPlayViewModel.CanContinue && LevelPlayViewModel.IsReturnedFromModal)
+            {
+                //ak mozem pokracovat lebo aj ked zle odpovedal tak kukol reklamu
+                Clear();
+                NextQuestion();
+            }
+
+            if (!LevelPlayViewModel.CanContinue && LevelPlayViewModel.IsReturnedFromModal)
+            {
+                //zle odpovedal a nekukol reklamu 
+                Clear();
+                Navigation.PopAsync();
+            }
+
+        }
+        private void Clear() {
+            LevelPlayViewModel.CanContinue = false;
+            LevelPlayViewModel.IsReturnedFromModal = false;
         }
     }
 }

@@ -6,7 +6,7 @@
              x:Class="QuizMobileApp.View.LevelPlayPage">
     <ContentPage.Content>
         <Grid>
-            <Grid.RowDefinitions>
+                <Grid.RowDefinitions>
                 <RowDefinition Height="3*" />
                 <RowDefinition Height="1.5*" />
                 <RowDefinition Height="Auto"/>
