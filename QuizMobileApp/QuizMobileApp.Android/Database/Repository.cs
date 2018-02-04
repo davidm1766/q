@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using Android.Content;
 using Android.Database;
 using Android.Database.Sqlite;
 using QuizMobileApp.Model;
@@ -30,8 +32,9 @@ namespace QuizMobileApp.Droid.Database
                 do
                 {
                     int id = c.GetInt(c.GetColumnIndex("ID"));
+                    var lckd = c.GetInt(c.GetColumnIndex("IS_LOCKED")) == 0 ? false : true;
                     var questions = this.GetQuestions(id);
-                    ret.Add(new LevelModel(questions) { IdLevel=id,AllQuestionsCount=questions.Count,CorrectAnswersCount = 0 });
+                    ret.Add(new LevelModel(questions) { IdLevel=id,AllQuestionsCount=questions.Count,CorrectAnswersCount = questions.Count(x =>x.IsAnswered),IsLocked = lckd });
                 } while (c.MoveToNext());
                 c.Close();
             }
@@ -52,8 +55,9 @@ namespace QuizMobileApp.Droid.Database
                     int idquestion = c.GetInt(c.GetColumnIndex("ID"));
                     int levelID = c.GetInt(c.GetColumnIndex("LEVEL_ID"));
                     string text = c.GetString(c.GetColumnIndex("TEXT"));
+                    bool isanswered = c.GetInt(c.GetColumnIndex("IS_ANSWERED")) == 0 ? false : true;
                     List<OptionInQuestionModel> options = GetAllOptionsForQuestion(idquestion);
-                    ret.Add(new QuestionModel(options) { IdQuestion = idquestion, QuestionText = text, LevelId = levelID });
+                    ret.Add(new QuestionModel(options) { IdQuestion = idquestion, QuestionText = text, LevelId = levelID,IsAnswered = isanswered });
                 } while (c.MoveToNext());
                 c.Close();
             }
@@ -82,6 +86,27 @@ namespace QuizMobileApp.Droid.Database
             }
             return ret;
         }
-        
+
+        public void WriteCorrectAnswers(List<QuestionModel> questions,int idLevel,int maxLevel)
+        {
+            SQLiteDatabase _objSQLiteDatabase = _sqliteUtil.WritableDatabase;
+            
+            foreach (var record in questions)
+            {
+                ContentValues cv = new ContentValues();
+                cv.Put("IS_ANSWERED", record.IsAnswered ? 1 : 0);
+                _objSQLiteDatabase.Update("QUESTIONS", cv, $"ID={record.IdQuestion}", null);
+            }
+            //unlock next level
+            if (maxLevel < idLevel + 1)
+            {
+                //cannot increment MAX
+            }
+            else {
+                ContentValues cv = new ContentValues();
+                cv.Put("IS_LOCKED", 0);
+                _objSQLiteDatabase.Update("LEVELS", cv, $"ID={idLevel+1}", null);
+            }
+        }
     }
 }

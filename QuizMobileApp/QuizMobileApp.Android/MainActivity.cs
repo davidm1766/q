@@ -7,7 +7,6 @@ using Android.Views;
 using Android.Widget;
 using Android.OS;
 using System.IO;
-using QuizMobileApp.Repository;
 using QuizMobileApp.Droid.Database;
 using Android.Gms.Ads;
 using Android.Gms.Ads.Reward;

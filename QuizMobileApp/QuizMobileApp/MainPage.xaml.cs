@@ -26,7 +26,7 @@ namespace QuizMobileApp
         {
             var levels = repository.GetAllLevels();
             var jokers = repository.GetAllJokers();
-            var lvlView = new LevelViewModel(levels,jokers);
+            var lvlView = new LevelViewModel(levels,jokers,repository);
             Navigation.PushAsync(new LevelSelectPage(lvlView));
         }
 

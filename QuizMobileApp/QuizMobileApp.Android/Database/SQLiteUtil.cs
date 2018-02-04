@@ -32,7 +32,7 @@ namespace QuizMobileApp.Droid.Database
 
         public override void OnCreate(SQLiteDatabase _database)
         {
-
+            CreateSQLiteDatabase();
         }
 
         public override void OnUpgrade(SQLiteDatabase db, int oldVersion, int newVersion)
@@ -78,7 +78,7 @@ namespace QuizMobileApp.Droid.Database
                 }
                 if (isSQLiteInitialized)
                 {
-                    _objSQLiteDatabase = SQLiteDatabase.OpenDatabase(_strSQLitePathOnDevice, null, DatabaseOpenFlags.OpenReadonly);
+                    _objSQLiteDatabase = SQLiteDatabase.OpenDatabase(_strSQLitePathOnDevice, null, DatabaseOpenFlags.OpenReadwrite);
                 }
             }
             catch (Exception _exception)

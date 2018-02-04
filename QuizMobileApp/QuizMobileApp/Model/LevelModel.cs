@@ -12,6 +12,8 @@ namespace QuizMobileApp.Model
         public int CorrectAnswersCount { get; set; }
         public int AllQuestionsCount { get; set; }
 
+        public bool IsLocked { get; set; }
+
         public List<QuestionModel> Questions { get; set; }
 
 
@@ -19,8 +21,22 @@ namespace QuizMobileApp.Model
             Questions = questionModel;
         }
 
+        public Color TxtColor {
+            get {
+                if (IsLocked)
+                {
+                    return Color.Gray;
+                }
+                else {
+                    return Color.Black;
+                }
+            }
+        }
         public Color LevelColor {
             get {
+                if (!IsLocked) {
+                    return Color.Green;
+                }
                 return (AllQuestionsCount - CorrectAnswersCount <= 1) ? Color.Yellow : Color.FromHex("ff8080");// Color.OrangeRed;
             }
         }

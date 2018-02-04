@@ -15,5 +15,6 @@ namespace QuizMobileApp.Repository
         List<OptionInQuestionModel> GetAllOptionsForQuestion(int IdQuestion);
 
         JokersModel GetAllJokers();
+        void WriteCorrectAnswers(List<QuestionModel> questions,int idLevel,int levelsCount);
     }
 }

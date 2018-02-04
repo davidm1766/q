@@ -114,8 +114,6 @@ namespace QuizMobileApp.View
                     }
                 }
 
-
-                //jokerDisplay.Children.Add(new Label() { Text = $"{i+1}: {cnt}" },0,i);
                 SKColor col;
                 switch (i % 6) {
                     case 0: col = SKColor.Parse("#8590d5");break;
@@ -127,9 +125,6 @@ namespace QuizMobileApp.View
                     case 5: col = SKColor.Parse("#99ccdd"); break;
                     default: col = SKColor.Parse("#99ccdd"); break;
                 }
-                 
-                
-                
                 entries.Add(new Microcharts.Entry(cnt) { Label = $"{i + 1}",Color=col });
             }
             ChartView ch = new ChartView() { HeightRequest = 150 };
@@ -157,10 +152,8 @@ namespace QuizMobileApp.View
                     {
                         srcList.Add(opt);
                         count--;
-                    }
-                    
-                }
-                
+                    }                    
+                }                
             }
             actualOptions = srcList;
             listOptions.ItemsSource = srcList;
@@ -175,9 +168,11 @@ namespace QuizMobileApp.View
                     OptionInQuestionModel que= item as OptionInQuestionModel;
                     if (que.IsCorrect)
                     {
+                        LevelPlayViewModel.GetActualQuestion().IsAnswered = true;
                         NextQuestion();
                     }
                     else {
+                        LevelPlayViewModel.GetActualQuestion().IsAnswered = false;
                         IncorrectAnswer();
                     }
                 });
@@ -186,7 +181,6 @@ namespace QuizMobileApp.View
 
         private void IncorrectAnswer()
         {
-            // DisplayAlert("Nespravna", "Zla odpoved", "Cancel");
             Navigation.PushAsync(new LevelFailed(new LevelFailedViewModel(this.LevelPlayViewModel, actualOptions)));
         }
 
@@ -196,7 +190,14 @@ namespace QuizMobileApp.View
             var quest = LevelPlayViewModel.GetNextQuestion();
             if (quest == null)
             {
-                DisplayAlert("NOVY LEVEL", "NOVY LEVEL", "Cancel");
+                var lvl = LevelPlayViewModel.Levels.Where(x=>x.IdLevel == LevelPlayViewModel.Level.IdLevel).FirstOrDefault();
+                if (lvl != null)
+                {
+                    lvl.IsLocked = false;
+                }
+                LevelPlayViewModel.WriteLevelDone(LevelPlayViewModel.Level.Questions,LevelPlayViewModel.Level.IdLevel,LevelPlayViewModel.MaxLevelId);
+                Navigation.PopAsync();
+                //write to DB
             }
             else {
 

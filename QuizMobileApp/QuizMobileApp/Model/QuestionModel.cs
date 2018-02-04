@@ -9,6 +9,7 @@ namespace QuizMobileApp.Model
         public int IdQuestion { get; set; }
         public string QuestionText { get; set; }
         public int LevelId { get; set; }
+        public bool IsAnswered { get; set; }
         public List<OptionInQuestionModel> Options { get; set; }
 
         public QuestionModel(List<OptionInQuestionModel> options)

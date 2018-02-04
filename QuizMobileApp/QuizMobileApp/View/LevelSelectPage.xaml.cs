@@ -16,7 +16,7 @@ namespace QuizMobileApp
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class LevelSelectPage : ContentPage
 	{
-        public LevelViewModel vm;
+        public LevelViewModel vm { get; set; }
 
         public LevelSelectPage() {
             InitializeComponent();
@@ -38,8 +38,11 @@ namespace QuizMobileApp
                 return new Command((item) =>
                 {
                     LevelModel lvl = item as LevelModel;
+                    if (lvl.IsLocked) {
+                        return;
+                    }
                     var level = vm.Levels.Where(x => x.IdLevel == lvl.IdLevel).FirstOrDefault();
-                    Navigation.PushAsync(new LevelPlayPage(new LevelPlayViewModel(level),vm.Jokers));
+                    Navigation.PushAsync(new LevelPlayPage(new LevelPlayViewModel(level,vm.Repository,vm.Levels),vm.Jokers));
                 });
             }
         }

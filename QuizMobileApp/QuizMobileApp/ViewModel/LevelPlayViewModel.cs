@@ -1,7 +1,8 @@
 ﻿using QuizMobileApp.Model;
-using System;
+using QuizMobileApp.Repository;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
+
 
 namespace QuizMobileApp.ViewModel
 {
@@ -11,10 +12,17 @@ namespace QuizMobileApp.ViewModel
         public LevelModel Level;
         public bool CanContinue { get; set; }
         public bool IsReturnedFromModal { get; set; }
+        public IRepository Repository { get; set; }
+        public List<LevelModel> Levels { get; set; }
+        public int MaxLevelId { get; }
         private int _actualQuestion;
 
-        public LevelPlayViewModel(LevelModel lvl)
+
+        public LevelPlayViewModel(LevelModel lvl, IRepository repository,List<LevelModel> levels)
         {
+            Levels = levels; 
+            MaxLevelId = levels.Max(x => x.IdLevel);
+            Repository = repository;
             Level = lvl;
             _actualQuestion = 0;
             CanContinue = false;
@@ -35,5 +43,9 @@ namespace QuizMobileApp.ViewModel
             return Level.Questions[++_actualQuestion];
         }
 
+        public void WriteLevelDone(List<QuestionModel> questions,int idLevel,int levelsCount)
+        {
+            Repository.WriteCorrectAnswers(questions,idLevel,levelsCount);
+        }
     }
 }
