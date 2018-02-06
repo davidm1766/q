@@ -26,7 +26,8 @@ namespace QuizMobileApp.Droid
             
             SQLiteUtil sql = new SQLiteUtil(this);
             Database.Repository dl = new Database.Repository(sql);
-            
+            Updater.Update(dl);
+
             global::Xamarin.Forms.Forms.Init(this, bundle);
 
             Xamarin.Forms.DependencyService.Register<ToastNotification>(); // Register your dependency

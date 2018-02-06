@@ -15,6 +15,7 @@ namespace QuizMobileApp.Droid.Database
         public Repository(SQLiteUtil util)
         {
             _sqliteUtil = util;
+            _objSQLiteDatabase = _sqliteUtil.WritableDatabase;
         }
 
         public JokersModel GetAllJokers() {
@@ -110,6 +111,34 @@ namespace QuizMobileApp.Droid.Database
                 cv.Put("IS_LOCKED", 0);
                 _objSQLiteDatabase.Update("LEVELS", cv, $"ID={idLevel+1}", null);
             }
+            
+        }
+
+        public int GetActualVersion()
+        {
+            
+            //KEY | VALUE => string, string
+            ICursor c = _objSQLiteDatabase.RawQuery("SELECT * FROM SETTING WHERE KEY = ?", new string[] { "VERSION" });
+            int ret = -1;
+            if (c.Count > 0)
+            {
+                c.MoveToFirst();
+                do
+                {
+                    ret = int.Parse(c.GetString(c.GetColumnIndex("VALUE")));
+                } while (c.MoveToNext());
+                c.Close();
+            }
+            return ret;
+        }
+
+        public void SetActualVersion(int version)
+        {
+           // SQLiteDatabase _objSQLiteDatabase = _sqliteUtil.WritableDatabase;
+
+            ContentValues cv = new ContentValues();
+            cv.Put("VALUE", version.ToString());
+            _objSQLiteDatabase.Update("SETTING", cv, $"KEY='VERSION'", null);
             
         }
     }

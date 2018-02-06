@@ -27,19 +27,19 @@
                     <RowDefinition Height="2*" />
                 </Grid.RowDefinitions>
 
-                <Label Grid.Row="0" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">KONIEC HRY</Label>
+                <Label FontSize="Large" Grid.Row="0" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">KONIEC HRY</Label>
                 <ScrollView Grid.Row="1" >
-                    <Label Margin="3" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" x:Name="questionLbl" Text="Znenie otazky?" />
+                    <Label FontSize="Large" Margin="3" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" x:Name="questionLbl" Text="Znenie otazky?" />
                 </ScrollView>
             </Grid>
 
             <Label x:Name="correctAnswer" Margin="3" Grid.Row="2" Grid.ColumnSpan="2" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" Text=""/>
-            
-            <Label Grid.Row="3" Grid.Column="0" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" Text="2"/>
-            <Label Grid.Row="3" Grid.Column="1" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" Text="2"/>
 
-            <Label Grid.Row="4" Grid.Column="0" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" Text="LEVEL"/>
-            <Label Grid.Row="4" Grid.Column="1" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" Text="OTÁZKA"/>
+            <Label FontSize="Large" Grid.Row="3" Grid.Column="0" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" Text="2"/>
+            <Label FontSize="Large" Grid.Row="3" Grid.Column="1" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" Text="2"/>
+
+            <Label FontSize="Large" Grid.Row="4" Grid.Column="0" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" Text="LEVEL"/>
+            <Label FontSize="Large" Grid.Row="4" Grid.Column="1" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" Text="OTÁZKA"/>
 
             <Button x:Name="tryAgainBtn" Clicked="TryAgainClicked" Grid.Row="5" Grid.Column="0" Margin="2" Text="Skúsiť znova"/>
             <Button x:Name="successfullyContinueBtn" Grid.Row="5" Grid.Column="1" Margin="2" Clicked="ShowCorrectClicked" Text="Zobraziť správnu odpoveď"/>

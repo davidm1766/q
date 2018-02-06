@@ -75,6 +75,7 @@ namespace DatabaseGenerator
             }
             sb.AppendLine("CREATE INDEX idx1 ON OPTIONS_QUESTION (QUESTION_ID,IS_CORRECT,TEXT,ID);");
             sb.AppendLine("CREATE INDEX idx2 ON QUESTIONS(LEVEL_ID, LEVEL_ID, IS_ANSWERED, TEXT);");
+            sb.AppendLine("insert into SETTING(KEY,VALUE) values('VERSION','1')");
             File.WriteAllText(insertExport,sb.ToString(),Encoding.Unicode);
         }
 
@@ -83,9 +84,11 @@ namespace DatabaseGenerator
             string levels = "create table LEVELS(ID Integer Not NULL PRIMARY KEY AUTOINCREMENT, DIFFICULTY TEXT Not NULL, IS_LOCKED INTEGER Not NULL)";
             string questions = "CREATE TABLE QUESTIONS (ID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,LEVEL_ID	INTEGER NOT NULL,IS_ANSWERED INTEGER NOT NULL, TEXT TEXT NOT NULL, FOREIGN KEY(LEVEL_ID) REFERENCES LEVELS(ID))";
             string options = "CREATE TABLE `OPTIONS_QUESTION` (ID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,TEXT TEXT NOT NULL,IS_CORRECT INTEGER NOT NULL,QUESTION_ID INTEGER NOT NULL,FOREIGN KEY(QUESTION_ID) REFERENCES QUESTIONS(ID))";
+            string settings = "CREATE TABLE `SETTING` (KEY TEXT NOT NULL, VALUE TEXT NOT NULL)";
             runSQL(levels);
             runSQL(questions);
             runSQL(options);
+            runSQL(settings);
         }
 
         private static void runSQL(string sql)

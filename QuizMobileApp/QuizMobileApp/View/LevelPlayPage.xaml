@@ -5,7 +5,7 @@
              xmlns:forms="clr-namespace:Microcharts.Forms;assembly=Microcharts.Forms"
              x:Class="QuizMobileApp.View.LevelPlayPage">
     <ContentPage.Content>
-        <Grid>
+        <Grid x:Name="Maingrid">
                 <Grid.RowDefinitions>
                 <RowDefinition Height="3*" />
                 <RowDefinition Height="1.5*" />
@@ -20,7 +20,7 @@
                    OutlineColor="Silver"
                    Margin="3,1,3,1" Padding="1">
                 <ScrollView VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
-                    <Label x:Name="LblQuestion" />
+                    <Label FontSize="Large" x:Name="LblQuestion" />
                 </ScrollView>
             </Frame>
 
@@ -60,7 +60,8 @@
                 </ListView.ItemTemplate>
             </local:ListViewExtended>
 
-            
+            <ActivityIndicator VerticalOptions="Center" HorizontalOptions="Center"
+                               x:Name="AIncicator" HeightRequest="100" WidthRequest="100" Grid.RowSpan="4" IsRunning="{Binding IsBusy}"/>
         </Grid>
         
         

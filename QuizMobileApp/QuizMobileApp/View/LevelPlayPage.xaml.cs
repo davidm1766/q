@@ -10,18 +10,20 @@ using Microcharts.Forms;
 using Microcharts;
 using SkiaSharp;
 using Plugin.Toasts;
+using Ads;
 
 namespace QuizMobileApp.View
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class LevelPlayPage : ContentPage
+    public partial class LevelPlayPage : ContentPage, IIntersticialNotify
     {
 
         public LevelPlayViewModel LevelPlayViewModel { get; set; }
         public JokersModel Jokers {get;set;}
         private Random _rnd;
         private List<OptionInQuestionModel> actualOptions;
-        
+        private IAdIntersticial adIntersticial;
+
         public string ActualQuest {
             get {
                 return $"{LevelPlayViewModel.ActualQuestionIdx+1}/{LevelPlayViewModel.Level.AllQuestionsCount}";
@@ -37,6 +39,9 @@ namespace QuizMobileApp.View
 		public LevelPlayPage (LevelPlayViewModel lvlVM, JokersModel jokers)
 		{
 			InitializeComponent ();
+            adIntersticial = DependencyService.Get<IAdIntersticial>();
+            adIntersticial.Init(this);
+
             Jokers = jokers;
             _rnd = new Random();
             LevelPlayViewModel = lvlVM;
@@ -68,6 +73,7 @@ namespace QuizMobileApp.View
             phoneImg.GestureRecognizers.Add(phoneTapRecognizer);
 
             BindingContext = this;
+            
         }
         
         private void OnPhoneTap(object obj)
@@ -215,8 +221,9 @@ namespace QuizMobileApp.View
                 }
                 LevelPlayViewModel.WriteLevelDone(LevelPlayViewModel.Level.Questions,LevelPlayViewModel.Level.IdLevel,LevelPlayViewModel.MaxLevelId);
 
-
-                Navigation.PopAsync();
+                IsBusy = true;
+                Maingrid.IsEnabled = false;
+                adIntersticial.LoadAd();
                 //write to DB
             }
             else {
@@ -249,6 +256,39 @@ namespace QuizMobileApp.View
         private void Clear() {
             LevelPlayViewModel.CanContinue = false;
             LevelPlayViewModel.IsReturnedFromModal = false;
+        }
+
+        public void RewardedVideoAdFailedToLoad(int error)
+        {
+            Enable();
+        }
+
+        public void RewardedVideoAdLoaded()
+        {
+            IsBusy = false;
+            Maingrid.IsEnabled = true;
+            adIntersticial.ShowAd();
+        }
+
+        public void RewardedVideoAdLeftApplication()
+        {
+            Enable();
+        }
+
+        public void RewardedVideoAdClosed()
+        {
+            Enable();
+        }
+
+        public void Rewarded()
+        {
+            Enable();   
+        }
+
+        private void Enable() {
+            IsBusy = false;
+            Maingrid.IsEnabled = true;
+            Navigation.PopAsync();
         }
     }
 }

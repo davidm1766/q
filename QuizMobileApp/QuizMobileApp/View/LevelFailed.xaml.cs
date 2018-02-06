@@ -15,15 +15,10 @@ namespace QuizMobileApp.View
         public LevelFailedViewModel LevelFailedVM { get; set; }
         private IAdRewarded adRewardedVideo;
         private IAdIntersticial adIntersticial;
-
-		public LevelFailed ()
+        
+        public LevelFailed ()
 		{
 			InitializeComponent ();
-            //adRewardedVideo = DependencyService.Get<IAdRewarded>();
-            //adRewardedVideo.Init(this);
-
-            //adIntersticial = DependencyService.Get<IAdIntersticial>();
-            //adIntersticial.Init(this);
         }
         public LevelFailed(LevelFailedViewModel lfvm)
         {
@@ -37,6 +32,10 @@ namespace QuizMobileApp.View
             questionLbl.Text = LevelFailedVM.LevelPlayViewModel.GetActualQuestion().QuestionText;
             BindingContext = this;
             this.IsBusy = false;
+
+            LevelFailedVM.LevelPlayViewModel.CanContinue = false;
+            LevelFailedVM.LevelPlayViewModel.IsReturnedFromModal = true;
+
         }
 
         public void ShowCorrectClicked(object sender, EventArgs e) {
@@ -157,8 +156,15 @@ namespace QuizMobileApp.View
             Navigation.PopToRootAsync();
         }
 
+        
+        protected override bool OnBackButtonPressed() {
+            base.OnBackButtonPressed();
+            return true;
+        }
+
         public void TryAgainClicked(object sender, EventArgs e)
         {
+            
             //Neuspesny back
             LevelFailedVM.LevelPlayViewModel.CanContinue = false;
             LevelFailedVM.LevelPlayViewModel.IsReturnedFromModal = true;
@@ -167,6 +173,7 @@ namespace QuizMobileApp.View
 
         public void ContinueClicked(object sender, EventArgs e)
         {
+            
             //je tu uspesny back
             LevelFailedVM.LevelPlayViewModel.CanContinue = true;
             LevelFailedVM.LevelPlayViewModel.IsReturnedFromModal = true;
