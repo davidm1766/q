@@ -47,6 +47,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Toasts.Forms.Plugin">
+      <Version>3.3.1</Version>
+    </PackageReference>
     <PackageReference Include="Xam.FormsPlugin.AdMobView">
       <Version>1.0.23</Version>
     </PackageReference>

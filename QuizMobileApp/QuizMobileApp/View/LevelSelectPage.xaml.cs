@@ -43,6 +43,7 @@ namespace QuizMobileApp
                 {
                     LevelModel lvl = item as LevelModel;
                     if (lvl.IsLocked) {
+                        DisplayAlert("", "Level je uzamknutý.", "Späť");
                         return;
                     }
                     var level = vm.Levels.Where(x => x.IdLevel == lvl.IdLevel).FirstOrDefault();
@@ -55,9 +56,7 @@ namespace QuizMobileApp
             base.OnAppearing();
             
             if (!firstLoaded)
-            {
-                //MainGrid.IsVisible = true;
-                //AIncicator.IsVisible = true;                
+            {   
                 LblSelectLevel.Text = "Prosím počkajte...";
                 LoadDataInThread();
             }

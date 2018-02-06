@@ -34,9 +34,7 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
             </local:ListViewExtended>
-            <ActivityIndicator x:Name="AIncicator" HeightRequest="100" WidthRequest="100" 
-                               VerticalOptions="Center" HorizontalOptions="Center" IsRunning ="{Binding IsBusy}"/>
-
+            
         </Grid>
         
     </ContentPage.Content>

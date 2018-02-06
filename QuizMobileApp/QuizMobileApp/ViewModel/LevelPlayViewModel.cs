@@ -15,7 +15,7 @@ namespace QuizMobileApp.ViewModel
         public IRepository Repository { get; set; }
         public LevelViewModel LevelViewModel { get; set; }
         public int MaxLevelId { get; }
-        private int _actualQuestion;
+        public int ActualQuestionIdx { get; set; }
 
 
         public LevelPlayViewModel(LevelModel lvl, IRepository repository,LevelViewModel levels)
@@ -24,7 +24,7 @@ namespace QuizMobileApp.ViewModel
             MaxLevelId = levels.Levels.Max(x => x.IdLevel);
             Repository = repository;
             Level = lvl;
-            _actualQuestion = 0;
+            ActualQuestionIdx = 0;
             CanContinue = false;
             IsReturnedFromModal = false;
         }
@@ -32,15 +32,15 @@ namespace QuizMobileApp.ViewModel
         public QuestionModel GetActualQuestion()
         {
 
-            return Level.Questions[_actualQuestion];
+            return Level.Questions[ActualQuestionIdx];
         }
 
         public QuestionModel GetNextQuestion() {
             //no more questions
-            if (_actualQuestion >= Level.Questions.Count-1) {
+            if (ActualQuestionIdx >= Level.Questions.Count-1) {
                 return null;
             }
-            return Level.Questions[++_actualQuestion];
+            return Level.Questions[++ActualQuestionIdx];
         }
 
         public void WriteLevelDone(List<QuestionModel> questions,int idLevel,int levelsCount)

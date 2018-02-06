@@ -9,6 +9,7 @@ using Xamarin.Forms.Xaml;
 using Microcharts.Forms;
 using Microcharts;
 using SkiaSharp;
+using Plugin.Toasts;
 
 namespace QuizMobileApp.View
 {
@@ -21,6 +22,12 @@ namespace QuizMobileApp.View
         private Random _rnd;
         private List<OptionInQuestionModel> actualOptions;
         
+        public string ActualQuest {
+            get {
+                return $"{LevelPlayViewModel.ActualQuestionIdx+1}/{LevelPlayViewModel.Level.AllQuestionsCount}";
+            }
+        }
+
         //because preview
         public LevelPlayPage() {
             InitializeComponent();
@@ -60,11 +67,16 @@ namespace QuizMobileApp.View
             };
             phoneImg.GestureRecognizers.Add(phoneTapRecognizer);
 
-
+            BindingContext = this;
         }
-
+        
         private void OnPhoneTap(object obj)
         {
+            Jokers.JokerPhone--;
+            if (Jokers.JokerPhone <= 0)
+            {
+                phoneImg.IsVisible = false;
+            }
             jokerDisplay.Children.Clear();
             Label l = new Label();
             string answer = "";
@@ -76,13 +88,18 @@ namespace QuizMobileApp.View
                 answer = actualOptions.Where(x => x.IsCorrect).First().Text;
             }
             
-
             l.Text = $"Priateľ na telefóne ti radí: {answer}, ale nie je si úplne istý.";
+            l.Margin = 3;
             jokerDisplay.Children.Add(l);
         }
 
         private void OnPeopleTap(object obj)
         {
+            Jokers.JokerPeople--;
+            if (Jokers.JokerPeople <= 0)
+            {
+                peopleImg.IsVisible = false;
+            }
             var opti = actualOptions;
             var count = opti.Count;
             List<int> randomVoting = new List<int>();
@@ -188,6 +205,7 @@ namespace QuizMobileApp.View
         {
             jokerDisplay.Children.Clear();
             var quest = LevelPlayViewModel.GetNextQuestion();
+            lblInfo.Text = ActualQuest;
             if (quest == null)
             {
                 var lvl = LevelPlayViewModel.LevelViewModel.Levels.Where(x=>x.IdLevel == LevelPlayViewModel.Level.IdLevel+1).FirstOrDefault();
@@ -196,6 +214,8 @@ namespace QuizMobileApp.View
                     lvl.IsLocked = false;
                 }
                 LevelPlayViewModel.WriteLevelDone(LevelPlayViewModel.Level.Questions,LevelPlayViewModel.Level.IdLevel,LevelPlayViewModel.MaxLevelId);
+
+
                 Navigation.PopAsync();
                 //write to DB
             }

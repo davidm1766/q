@@ -18,7 +18,7 @@ namespace QuizMobileApp.Droid.Database
         }
 
         public JokersModel GetAllJokers() {
-            return new JokersModel() { Joker50on50 = 2, JokerPeople = 1, JokerPhone = 1 };
+            return new JokersModel() { Joker50on50 = 1, JokerPeople = 1, JokerPhone = 1 };
         }
 
         public List<LevelModel> GetAllLevels()

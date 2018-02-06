@@ -10,6 +10,7 @@ using System.IO;
 using QuizMobileApp.Droid.Database;
 using Android.Gms.Ads;
 using Android.Gms.Ads.Reward;
+using Plugin.Toasts;
 
 namespace QuizMobileApp.Droid
 {
@@ -28,10 +29,12 @@ namespace QuizMobileApp.Droid
             
             global::Xamarin.Forms.Forms.Init(this, bundle);
 
-            //var id = "ca-app-pub-9312615750092757~3504098531";
-            //Android.Gms.Ads.MobileAds.Initialize(ApplicationContext, id);
+            Xamarin.Forms.DependencyService.Register<ToastNotification>(); // Register your dependency
             
-            
+            // If you are using Android you must pass through the activity
+            //ToastNotification.Init(this);
+
+            ToastNotification.Init(this, new PlatformOptions() { SmallIconDrawable = Android.Resource.Drawable.IcDialogInfo });
 
             LoadApplication(new App(dl));
         }
