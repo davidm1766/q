@@ -35,9 +35,9 @@
                 </Grid.ColumnDefinitions>
 
                     <Label HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Grid.Column="0">27</Label>
-                    <Image x:Name="fiftyfiftyImg" Source="fiftyfifty.jpg" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" Grid.Column="1"/>
-                    <Image x:Name="peopleImg" Source="icon.png" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" Grid.Column="2"/>
-                    <Image x:Name="phoneImg" Source="phone.jpg" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" Grid.Column="3"/>
+                    <Image x:Name="fiftyfiftyImg" Source="percent.png" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" Grid.Column="1"/>
+                    <Image x:Name="peopleImg" Source="ppl.png" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" Grid.Column="2"/>
+                    <Image x:Name="phoneImg" Source="phone.png" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" Grid.Column="3"/> 
                     <Label x:Name="lblInfo" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Grid.Column="4" Text="{Binding ActualQuest}"/>
 
                 </Grid>

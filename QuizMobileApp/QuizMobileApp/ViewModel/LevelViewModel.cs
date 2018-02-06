@@ -14,12 +14,14 @@ namespace QuizMobileApp.ViewModel
 
         public JokersModel Jokers { get; set; }
         public IRepository Repository { get; set; }
+        public int IsReturnedFromLevel { get; set; }
 
         public LevelViewModel(List<LevelModel> model, JokersModel jokers, IRepository repository)
         {
             Repository = repository; 
             Levels = model;
             Jokers = jokers;
+            IsReturnedFromLevel = -1;
         }
 
         public void ReloadLevels() {

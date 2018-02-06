@@ -17,7 +17,7 @@ namespace QuizMobileApp.View
     public partial class LevelPlayPage : ContentPage
     {
 
-        public LevelPlayViewModel LevelPlayViewModel;
+        public LevelPlayViewModel LevelPlayViewModel { get; set; }
         public JokersModel Jokers {get;set;}
         private Random _rnd;
         private List<OptionInQuestionModel> actualOptions;
@@ -34,7 +34,7 @@ namespace QuizMobileApp.View
             _rnd = new Random();
         }
 
-		public LevelPlayPage (LevelPlayViewModel lvlVM,JokersModel jokers)
+		public LevelPlayPage (LevelPlayViewModel lvlVM, JokersModel jokers)
 		{
 			InitializeComponent ();
             Jokers = jokers;
@@ -241,6 +241,7 @@ namespace QuizMobileApp.View
             {
                 //zle odpovedal a nekukol reklamu 
                 Clear();
+                LevelPlayViewModel.LevelViewModel.IsReturnedFromLevel = this.LevelPlayViewModel.Level.IdLevel;
                 Navigation.PopAsync();
             }
 

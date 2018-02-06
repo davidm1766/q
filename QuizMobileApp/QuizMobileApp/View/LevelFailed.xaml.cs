@@ -35,13 +35,16 @@ namespace QuizMobileApp.View
             adIntersticial = DependencyService.Get<IAdIntersticial>();
             adIntersticial.Init(this);
             questionLbl.Text = LevelFailedVM.LevelPlayViewModel.GetActualQuestion().QuestionText;
+            BindingContext = this;
+            this.IsBusy = false;
         }
 
         public void ShowCorrectClicked(object sender, EventArgs e) {
-            adRewardedVideo.LoadAd();
-            return;
+            
             if (CrossConnectivity.Current.IsConnected)
             {
+                IsBusy = true;
+                mainGrid.IsEnabled = false;
                 adRewardedVideo.LoadAd();
             }
             else
@@ -142,10 +145,16 @@ namespace QuizMobileApp.View
             successfullyContinueBtn.Clicked -= ShowCorrectClicked;
             successfullyContinueBtn.Clicked += ContinueClicked;
             successfullyContinueBtn.Text = "Pokračovať v hre";
+            IsBusy = false;
+            mainGrid.IsEnabled = true;
         }
 
         public void RewardFail() {
-
+            IsBusy = false;
+            mainGrid.IsEnabled = true;
+        }
+        public void GoHomeClicked(object sender, EventArgs e) {
+            Navigation.PopToRootAsync();
         }
 
         public void TryAgainClicked(object sender, EventArgs e)
@@ -163,5 +172,7 @@ namespace QuizMobileApp.View
             LevelFailedVM.LevelPlayViewModel.IsReturnedFromModal = true;
             Navigation.PopAsync();
         }
+
+
     }
 }

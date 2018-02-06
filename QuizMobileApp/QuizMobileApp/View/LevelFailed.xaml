@@ -5,7 +5,7 @@
              x:Class="QuizMobileApp.View.LevelFailed">
     <ContentPage.Content>
         
-        <Grid>
+        <Grid x:Name="mainGrid">
             <Grid.RowDefinitions>
                 <RowDefinition Height="0.5*" />
                 <RowDefinition Height="2*" />
@@ -44,8 +44,11 @@
             <Button x:Name="tryAgainBtn" Clicked="TryAgainClicked" Grid.Row="5" Grid.Column="0" Margin="2" Text="Skúsiť znova"/>
             <Button x:Name="successfullyContinueBtn" Grid.Row="5" Grid.Column="1" Margin="2" Clicked="ShowCorrectClicked" Text="Zobraziť správnu odpoveď"/>
 
-      
-            <Button Grid.Row="6" Grid.ColumnSpan="2" Margin="2" Text="Skončiť hru"/>
+
+            <Button Grid.Row="6" Clicked="GoHomeClicked"  Grid.ColumnSpan="2" Margin="2" Text="Skončiť hru"/>
+            <ActivityIndicator VerticalOptions="Center" HorizontalOptions="Center"
+                               x:Name="AIncicator" HeightRequest="100" WidthRequest="100" 
+                               Grid.ColumnSpan="2" Grid.RowSpan="8" IsRunning="{Binding IsBusy}"/>
         </Grid>
     </ContentPage.Content>
 </ContentPage>

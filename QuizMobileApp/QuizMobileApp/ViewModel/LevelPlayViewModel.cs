@@ -27,6 +27,7 @@ namespace QuizMobileApp.ViewModel
             ActualQuestionIdx = 0;
             CanContinue = false;
             IsReturnedFromModal = false;
+            
         }
 
         public QuestionModel GetActualQuestion()

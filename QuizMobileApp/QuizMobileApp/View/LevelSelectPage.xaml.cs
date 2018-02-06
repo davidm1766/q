@@ -59,6 +59,11 @@ namespace QuizMobileApp
             {   
                 LblSelectLevel.Text = "Prosím počkajte...";
                 LoadDataInThread();
+                if (vm.IsReturnedFromLevel != -1) {
+                    var lvl = vm.IsReturnedFromLevel;
+                    vm.IsReturnedFromLevel = -1;
+                    Navigation.PushAsync(new LevelPlayPage(new LevelPlayViewModel(vm.Levels.Where(x=>x.IdLevel==lvl).First(), vm.Repository, vm), vm.Jokers));
+                }
             }
             else {
                 firstLoaded = false;

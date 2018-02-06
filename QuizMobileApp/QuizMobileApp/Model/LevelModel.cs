@@ -41,10 +41,11 @@ namespace QuizMobileApp.Model
         }
         public Color LevelColor {
             get {
-                if (!IsLocked) {
-                    return Color.Green;
+                if (IsLocked) {
+                    return Color.FromHex("ffc2b3");
                 }
-                return (AllQuestionsCount - CorrectAnswersCount <= 1) ? Color.Yellow : Color.FromHex("ff8080");// Color.OrangeRed;
+                //(AllQuestionsCount - CorrectAnswersCount <= 1) ? Color.Yellow : 
+                return Color.FromHex("c2f0c2"); // Color.OrangeRed;
             }
         }
 
