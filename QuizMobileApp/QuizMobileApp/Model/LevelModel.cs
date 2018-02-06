@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
+using System.Linq;
 using Xamarin.Forms;
 
 namespace QuizMobileApp.Model
@@ -9,7 +10,13 @@ namespace QuizMobileApp.Model
     public class LevelModel
     {
         public int IdLevel { get; set; }
-        public int CorrectAnswersCount { get; set; }
+        public int CorrectAnswersCount
+        {
+            get
+            {
+                return Questions.Count(x => x.IsAnswered);
+            }
+        }
         public int AllQuestionsCount { get; set; }
 
         public bool IsLocked { get; set; }

@@ -1,18 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-
-using Android.App;
 using Android.Content;
-using Android.Content.Res;
 using Android.Database.Sqlite;
-using Android.OS;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
 
 namespace QuizMobileApp.Droid.Database
 {
@@ -77,7 +67,7 @@ namespace QuizMobileApp.Droid.Database
                     }
                 }
                 if (isSQLiteInitialized)
-                {
+                {                       
                     _objSQLiteDatabase = SQLiteDatabase.OpenDatabase(_strSQLitePathOnDevice, null, DatabaseOpenFlags.OpenReadwrite);
                 }
             }

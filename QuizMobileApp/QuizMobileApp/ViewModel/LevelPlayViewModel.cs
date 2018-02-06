@@ -13,15 +13,15 @@ namespace QuizMobileApp.ViewModel
         public bool CanContinue { get; set; }
         public bool IsReturnedFromModal { get; set; }
         public IRepository Repository { get; set; }
-        public List<LevelModel> Levels { get; set; }
+        public LevelViewModel LevelViewModel { get; set; }
         public int MaxLevelId { get; }
         private int _actualQuestion;
 
 
-        public LevelPlayViewModel(LevelModel lvl, IRepository repository,List<LevelModel> levels)
+        public LevelPlayViewModel(LevelModel lvl, IRepository repository,LevelViewModel levels)
         {
-            Levels = levels; 
-            MaxLevelId = levels.Max(x => x.IdLevel);
+            LevelViewModel = levels; 
+            MaxLevelId = levels.Levels.Max(x => x.IdLevel);
             Repository = repository;
             Level = lvl;
             _actualQuestion = 0;

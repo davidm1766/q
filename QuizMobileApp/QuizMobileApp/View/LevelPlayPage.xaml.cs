@@ -190,7 +190,7 @@ namespace QuizMobileApp.View
             var quest = LevelPlayViewModel.GetNextQuestion();
             if (quest == null)
             {
-                var lvl = LevelPlayViewModel.Levels.Where(x=>x.IdLevel == LevelPlayViewModel.Level.IdLevel).FirstOrDefault();
+                var lvl = LevelPlayViewModel.LevelViewModel.Levels.Where(x=>x.IdLevel == LevelPlayViewModel.Level.IdLevel+1).FirstOrDefault();
                 if (lvl != null)
                 {
                     lvl.IsLocked = false;

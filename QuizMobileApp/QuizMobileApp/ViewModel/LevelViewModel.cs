@@ -21,6 +21,10 @@ namespace QuizMobileApp.ViewModel
             Levels = model;
             Jokers = jokers;
         }
+
+        public void ReloadLevels() {
+            Levels = Repository.GetAllLevels();
+        }
         
     }
 }

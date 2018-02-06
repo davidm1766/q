@@ -44,6 +44,15 @@ namespace DatabaseGenerator
             Parse(hardPath, "H");
 
             WriteToDB();
+            RunSQLs();
+        }
+
+        private static void RunSQLs()
+        {
+            var lines = File.ReadAllLines(insertExport);
+            foreach (var line in lines) {
+                runSQL(line);
+            }
         }
 
         private static void WriteToDB()
@@ -64,7 +73,8 @@ namespace DatabaseGenerator
                     }
                 }
             }
-
+            sb.AppendLine("CREATE INDEX idx1 ON OPTIONS_QUESTION (QUESTION_ID,IS_CORRECT,TEXT,ID);");
+            sb.AppendLine("CREATE INDEX idx2 ON QUESTIONS(LEVEL_ID, LEVEL_ID, IS_ANSWERED, TEXT);");
             File.WriteAllText(insertExport,sb.ToString(),Encoding.Unicode);
         }
 

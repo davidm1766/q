@@ -11,6 +11,7 @@ namespace QuizMobileApp.Droid.Database
     public class Repository : IRepository
     {
         private SQLiteUtil _sqliteUtil;
+        private SQLiteDatabase _objSQLiteDatabase;
         public Repository(SQLiteUtil util)
         {
             _sqliteUtil = util;
@@ -23,7 +24,7 @@ namespace QuizMobileApp.Droid.Database
         public List<LevelModel> GetAllLevels()
         {
             List<LevelModel> ret = new List<LevelModel>();
-            SQLiteDatabase _objSQLiteDatabase = _sqliteUtil.WritableDatabase;
+            _objSQLiteDatabase = _sqliteUtil.WritableDatabase;
             ICursor c = _objSQLiteDatabase.RawQuery("SELECT * FROM LEVELS ", new string[] { });
 
             if (c.Count > 0)
@@ -34,7 +35,7 @@ namespace QuizMobileApp.Droid.Database
                     int id = c.GetInt(c.GetColumnIndex("ID"));
                     var lckd = c.GetInt(c.GetColumnIndex("IS_LOCKED")) == 0 ? false : true;
                     var questions = this.GetQuestions(id);
-                    ret.Add(new LevelModel(questions) { IdLevel=id,AllQuestionsCount=questions.Count,CorrectAnswersCount = questions.Count(x =>x.IsAnswered),IsLocked = lckd });
+                    ret.Add(new LevelModel(questions) { IdLevel=id,AllQuestionsCount=questions.Count,IsLocked = lckd });
                 } while (c.MoveToNext());
                 c.Close();
             }
@@ -44,7 +45,7 @@ namespace QuizMobileApp.Droid.Database
         public List<QuestionModel> GetQuestions(int id)
         {
             List<QuestionModel> ret = new List<QuestionModel>();
-            SQLiteDatabase _objSQLiteDatabase = _sqliteUtil.WritableDatabase;
+           // SQLiteDatabase _objSQLiteDatabase = _sqliteUtil.WritableDatabase;
             ICursor c = _objSQLiteDatabase.RawQuery("SELECT * FROM QUESTIONS WHERE LEVEL_ID = ?", new string[] { id.ToString() });
 
             if (c.Count > 0)
@@ -56,6 +57,7 @@ namespace QuizMobileApp.Droid.Database
                     int levelID = c.GetInt(c.GetColumnIndex("LEVEL_ID"));
                     string text = c.GetString(c.GetColumnIndex("TEXT"));
                     bool isanswered = c.GetInt(c.GetColumnIndex("IS_ANSWERED")) == 0 ? false : true;
+                    
                     List<OptionInQuestionModel> options = GetAllOptionsForQuestion(idquestion);
                     ret.Add(new QuestionModel(options) { IdQuestion = idquestion, QuestionText = text, LevelId = levelID,IsAnswered = isanswered });
                 } while (c.MoveToNext());
@@ -63,11 +65,12 @@ namespace QuizMobileApp.Droid.Database
             }
             return ret;
         }
-
+        
         public List<OptionInQuestionModel> GetAllOptionsForQuestion(int IdQuestion)
         {
             List<OptionInQuestionModel> ret = new List<OptionInQuestionModel>();
-            SQLiteDatabase _objSQLiteDatabase = _sqliteUtil.WritableDatabase;
+            //SQLiteDatabase _objSQLiteDatabase = db;//_sqliteUtil.WritableDatabase;
+            
             ICursor c = _objSQLiteDatabase.RawQuery("SELECT * FROM OPTIONS_QUESTION WHERE QUESTION_ID = ?", new string[] { IdQuestion.ToString() });
             
             if (c.Count > 0)
@@ -107,6 +110,7 @@ namespace QuizMobileApp.Droid.Database
                 cv.Put("IS_LOCKED", 0);
                 _objSQLiteDatabase.Update("LEVELS", cv, $"ID={idLevel+1}", null);
             }
+            
         }
     }
 }
